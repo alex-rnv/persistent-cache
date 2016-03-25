@@ -1,0 +1,29 @@
+package com.alexrnv.tripgen.dto;
+
+option java_package = "com.alexrnv.tripgen.dto";
+option java_outer_classname = "DataObjects";
+
+message Probe {
+    required bytes sensorId = 1;
+    required int64 id = 2;
+    optional bytes cellId = 3;
+    optional double cellLat = 4;
+    optional double cellLon = 5;
+    optional int64 timestamp = 6;
+    required EventType eventType = 7;
+}
+
+message Trip {
+    required bytes tripId = 1;
+    required int64 startTime = 2;
+    required int64 endTime = 3;
+    required bytes sensorId = 4;
+    optional bool completed = 5 [default = false];
+    repeated Probe probes = 6;
+}
+
+enum EventType {
+    CALL_START = 0;
+    LOCATION_UPDATE = 1;
+    CALL_END = 2;
+}
