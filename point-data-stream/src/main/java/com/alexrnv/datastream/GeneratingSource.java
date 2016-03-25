@@ -23,8 +23,11 @@ public class GeneratingSource {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
             .withZone(ZoneOffset.UTC);
 
-    private int TRIPS_DAILY = 1_000_000;
-    private int TRIPS_MULTIPLIER = 300;
+    @Value("${trips.day.limit}")
+    private int tripsDaily;
+    @Value("${trips.day.multiplier}")
+    private int tripsMultiplier;
+
     private int LOG_LIM = 100_000;
 
     private final int STOP_TIME_SEC = 600;
@@ -38,11 +41,11 @@ public class GeneratingSource {
     @Value("${source.folder}")
     private String folder;
 
-    private List<Probe> currentProbes = new ArrayList<>(TRIPS_DAILY);
+    private List<Probe> currentProbes = new ArrayList<>(tripsDaily);
 
     @PostConstruct
     private void init() {
-        for(int trip=0; trip< TRIPS_DAILY; trip++) {
+        for(int trip=0; trip< tripsDaily; trip++) {
             String date = startDate.plus(rnd.nextInt(6)-3, ChronoUnit.SECONDS).format(formatter);
             double startLat = rnd.nextInt(700)/10.1 + 10.;
             double startLon = rnd.nextInt(1600)/10.1 + 10.;
@@ -63,10 +66,10 @@ public class GeneratingSource {
         int s=0;
         for(Probe p : currentProbes) {
             stream.add(p.toString());
-            for(int m=1; m<TRIPS_MULTIPLIER; m++) {
+            for(int m=1; m<tripsMultiplier; m++) {
                 stream.add(p.toString(m));
             }
-            if(s % LOG_LIM == 0) System.out.printf("Initial probes sent: %d\n", (s++)*TRIPS_MULTIPLIER);
+            if(s % LOG_LIM == 0) System.out.printf("Initial probes sent: %d\n", (s++)*tripsMultiplier);
         }
         s=0;
         while(true) {
@@ -90,10 +93,10 @@ public class GeneratingSource {
 
                 p.update(0.0021455, 0.0024342, timeD);
                 stream.add(p.toString());
-                for(int m=1; m<TRIPS_MULTIPLIER; m++) {
+                for(int m=1; m<tripsMultiplier; m++) {
                     stream.add(p.toString(m));
                 }
-                if(s % LOG_LIM == 0) System.out.printf("Probes sent: %d\n", (s++)*TRIPS_MULTIPLIER);
+                if(s % LOG_LIM == 0) System.out.printf("Probes sent: %d\n", (s++)*tripsMultiplier);
             }
         }
     }

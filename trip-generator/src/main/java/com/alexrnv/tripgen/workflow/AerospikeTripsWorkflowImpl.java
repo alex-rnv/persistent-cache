@@ -4,7 +4,6 @@ import com.aerospike.client.AerospikeClient;
 import com.aerospike.client.Bin;
 import com.aerospike.client.Key;
 import com.aerospike.client.Record;
-import com.alexrnv.tripgen.dto.DataObjects;
 import com.alexrnv.tripgen.dto.DataObjects.Probe;
 import com.alexrnv.tripgen.dto.DataObjects.Trip;
 import com.google.protobuf.ByteString;
@@ -21,7 +20,6 @@ public class AerospikeTripsWorkflowImpl extends TripsWorkFlow {
     private final String NAMESPACE = "test";
 
     public AerospikeTripsWorkflowImpl() {
-        super(workFlowStats);
         client = new AerospikeClient("127.0.0.1", 3000);
     }
 
@@ -61,20 +59,4 @@ public class AerospikeTripsWorkflowImpl extends TripsWorkFlow {
         super.finalize();
     }
 
-    public static void main(String[] args) throws IOException {
-        AerospikeTripsWorkflowImpl workflow = new AerospikeTripsWorkflowImpl();
-        Probe p = Probe.newBuilder()
-                .setId(1)
-                .setCellId(ByteString.copyFromUtf8("aRRcrqWDEAWDRQWEDREF"))
-                .setSensorId(ByteString.copyFromUtf8("5678"))
-                        .setCellLat(154353.00)
-                        .setCellLon(25435.00)
-                        .setEventType(DataObjects.EventType.CALL_START)
-                        .setTimestamp(123555555)
-                        .build();
-        workflow.createNewTrip(p);
-
-        Trip t = workflow.findPendingTrip(ByteString.copyFromUtf8("5678"));
-        System.out.println(t);
-    }
 }

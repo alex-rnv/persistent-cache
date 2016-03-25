@@ -75,7 +75,7 @@
                     <programs>
                         <program>
                             <mainClass>com.alexrnv.tripgen.TripGenerator</mainClass>
-                            <id>benchmark</id>
+                            <id>trip-generator</id>
                             <jvmSettings>
                                 <extraArguments>
                                     <extraArgument>-Djava.net.preferIPv4Stack=true</extraArgument>

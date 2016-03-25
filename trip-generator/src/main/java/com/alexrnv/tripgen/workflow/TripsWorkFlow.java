@@ -17,15 +17,11 @@ public abstract class TripsWorkFlow {
     private static final long PROBES_TIME_DIF_THRESHOLD =  600 * 1000; //600s
     private static final double PROBES_DIST_DIF_THRESHOLD = 1000.; //1 km
 
-    protected static final ThreadLocal<Trip.Builder> tripBuilder = ThreadLocal.withInitial(() -> Trip.newBuilder());
+    protected static final ThreadLocal<Trip.Builder> tripBuilder = ThreadLocal.withInitial(Trip::newBuilder);
     protected static final ThreadLocal<byte[]> bytes = ThreadLocal.withInitial(() -> new byte[4]);
     protected static final Random rnd = new Random();
 
-    private final WorkFlowStats workFlowStats;
-
-    public TripsWorkFlow(WorkFlowStats workFlowStats) {
-        this.workFlowStats = workFlowStats;
-    }
+    private final WorkFlowStats workFlowStats = new WorkFlowStats();
 
     public WorkFlowStats getWorkFlowStats() {
         return workFlowStats;

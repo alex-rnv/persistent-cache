@@ -30,7 +30,6 @@ public class RocksDBTripsWorkFlowImpl extends TripsWorkFlow {
         //        .forEach(f -> f.delete());
         ///
 
-        super(workFlowStats);
         this.options = new Options()
                 .useFixedLengthPrefixExtractor(10)
                 .setCreateIfMissing(true)
