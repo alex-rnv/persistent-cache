@@ -2,11 +2,11 @@
 
 ## Intro
 This is sample reference application to scrutinize two local file storages for use as high-throughput disk-backed cache. 
-Candidates are [RocksDB](http://rocksdb.org/) and locally placed one-node version of [Aerospike](http://www.aerospike.com/).
+Candidates are [RocksDB](http://rocksdb.org/) and placed one-node version of [Aerospike](http://www.aerospike.com/) (running on the same server, of course).
 The main idea is to check if we can achieve performance comparable to in-memory data grid.
 
 ## Application description
-Sample app emulates input stream of gps ticks from many sensors, and aggregating server, merging them together to build trips. 
+Sample app emulates input stream of gps ticks from many sensors, and aggregating server, merging them together to build trips. Algorithm is as simple as one rule: if next point is close enough to previous one and time between those ticks is not so much - current trip is resumed with new point, otherwise previous trip closed, new trip started. 
 Server uses persistent cache for real-time incremental trip building.
 ## Modules
 Two modules should be run in separate processes for better measurements.    
