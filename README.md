@@ -27,8 +27,7 @@ Change this param with above setting to achieve desired sensors number.
 
 ### trip-generator
 
-Listens to gps data on localhost:8099, creates/updates trips at runtime. Each transaction does at least one cache lookup (create),
-or 2 (find and update/complete).    
+Listens to gps data on localhost:8099, creates/updates trips at runtime. Each transaction does 2 cache lookups (find and create/update+complete).    
 ForkJoinPool is used as main executor, its queue size is an indicator of desired calculation speed: 
 queue size should not grow to infinite values, it is periodically written to output.        
 Build and run:    
